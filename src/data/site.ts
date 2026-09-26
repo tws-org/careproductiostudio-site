@@ -2,8 +2,7 @@ export const SITE_NAME = 'Care Practice Studio';
 export const SITE_URL = 'https://carepracticestudio.com';
 export const CONTACT_EMAIL = 'help@carepracticestudio.com';
 
-// TODO: replace with the real Calendly (or equivalent) booking URL before launch.
-export const BOOKING_URL = 'https://calendly.com/';
+export const BOOKING_URL = 'https://calendly.com/tumultywebservices/new-meeting';
 
 // UTM tags make bookings that came from the site countable in Calendly.
 export const BOOKING_UTM = {
