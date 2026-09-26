@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Chips from '../components/Chips.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { STEPS } from '../data/site';
+import { FEATURES } from '../data/features';
 ---
 
 <Base
@@ -45,7 +46,7 @@ import { STEPS } from '../data/site';
     </svg>
   </section>
 
-  <section class="section section--mint two-up" aria-label="Who I help and case study">
+  <section class:list={['section', 'section--mint', 'two-up', FEATURES.caseStudies ? '' : 'two-up--single']} aria-label="Who I help and case study">
     <article class="teaser teaser--light">
       <div class="eyebrow">Who I help</div>
       <h2 class="h2 h2--card">Made for small practices, not hospital systems</h2>
@@ -54,6 +55,7 @@ import { STEPS } from '../data/site';
       <div class="grow"></div>
       <a class="textlink" href="/help">Who I help →</a>
     </article>
+    {FEATURES.caseStudies && (
     <article class="teaser teaser--dark">
       <div class="eyebrow eyebrow--light">Case study · Jess Rebelo</div>
       <h2 class="h2 h2--card">Real results, not just promises</h2>
@@ -65,6 +67,7 @@ import { STEPS } from '../data/site';
       <div class="grow"></div>
       <a class="textlink textlink--light" href="/help#case-studies">Read the case study →</a>
     </article>
+    )}
   </section>
 
   <section class="section section--roomy stack how" aria-labelledby="how-title">

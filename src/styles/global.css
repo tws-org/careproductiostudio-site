@@ -147,6 +147,9 @@ main { flex-grow: 1; display: flex; flex-direction: column; }
 .split { display: grid; grid-template-columns: 5fr 7fr; gap: 80px; }
 .stack { display: flex; flex-direction: column; }
 .two-up { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+.two-up--single { grid-template-columns: 1fr; }
+.two-up--single { grid-template-columns: 1fr; }
+.two-up--single { grid-template-columns: 1fr; }
 .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; }
 @media (max-width: 899px) {
   .section { padding-top: 52px; padding-bottom: 52px; }

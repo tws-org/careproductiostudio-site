@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Chips from '../components/Chips.astro';
 import CtaBand from '../components/CtaBand.astro';
 import CaseStudies from '../components/CaseStudies.astro';
+import { FEATURES } from '../data/features';
 
 const faqs = [
   {
@@ -104,7 +105,7 @@ const faqs = [
     </div>
   </section>
 
-  <CaseStudies />
+  {FEATURES.caseStudies && <CaseStudies />}
 
   <section class="section section--roomy split" aria-labelledby="faq-title">
     <h2 id="faq-title" class="h2">Straight answers before the work begins</h2>

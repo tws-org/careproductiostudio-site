@@ -2,7 +2,11 @@
 // Usage: node scripts/verify.mjs [baseUrl] [screenshotDir]
 //   baseUrl defaults to http://localhost:8788 (`npx wrangler pages dev dist --port 8788`).
 import { chromium } from 'playwright';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, readFileSync } from 'node:fs';
+
+// Read the feature flag from the built output (it's inlined into the JS bundle).
+const flagSrc = readFileSync(new URL('../src/data/features.ts', import.meta.url), 'utf8');
+const caseStudiesOn = /caseStudies:\s*true/.test(flagSrc);
 
 const BASE = (process.argv[2] || 'http://localhost:8788').replace(/\/$/, '');
 const SHOTS = process.argv[3];
@@ -101,12 +105,16 @@ for (const vp of VIEWPORTS) {
     }
 
     if (route === '/help') {
-      ok((await page.locator('#case-studies .slide article.cs-card').count()) >= 1, 'case study cards rendered from data');
-      const next = page.locator('#case-studies [data-next]');
-      if (await next.isVisible()) {
-        await next.click();
-        const counter = await page.locator('#case-studies [data-counter]').textContent();
-        ok(counter?.startsWith('2 of'), `carousel advances (${counter})`);
+      if (caseStudiesOn) {
+        ok((await page.locator('#case-studies .slide article.cs-card').count()) >= 1, 'case study cards rendered from data');
+        const next = page.locator('#case-studies [data-next]');
+        if (await next.isVisible()) {
+          await next.click();
+          const counter = await page.locator('#case-studies [data-counter]').textContent();
+          ok(counter?.startsWith('2 of'), `carousel advances (${counter})`);
+        }
+      } else {
+        ok((await page.locator('#case-studies').count()) === 0, 'case studies hidden while flag is off');
       }
     }
 
