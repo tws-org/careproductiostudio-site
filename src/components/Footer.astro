@@ -3,7 +3,7 @@ import Logo from './Logo.astro';
 import { NAV_LINKS, CONTACT_LINK, CONTACT_EMAIL, SITE_NAME, type PageKey } from '../data/site';
 
 interface Props {
-  current: PageKey;
+  current?: PageKey;
 }
 const { current } = Astro.props;
 const links = [...NAV_LINKS, CONTACT_LINK];
@@ -26,7 +26,7 @@ const closing =
     <nav aria-label="Footer" class="footer-nav">
       <div class="footer-col footer-col--site">
         <div class="footer-col__label">Site</div>
-        {links.map((l) => <a href={l.href}>{l.label}</a>)}
+        {links.map((l) => <a href={l.href} aria-current={current === l.key ? 'page' : undefined}>{l.label}</a>)}
       </div>
       <div class="footer-col">
         <div class="footer-col__label">Get in touch</div>

@@ -3,7 +3,7 @@ import Logo from './Logo.astro';
 import { NAV_LINKS, CONTACT_LINK, SITE_NAME, type PageKey } from '../data/site';
 
 interface Props {
-  current: PageKey;
+  current?: PageKey;
 }
 const { current } = Astro.props;
 const allLinks = [...NAV_LINKS, CONTACT_LINK];
