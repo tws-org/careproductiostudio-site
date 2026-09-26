@@ -1,0 +1,94 @@
+---
+import Logo from './Logo.astro';
+import { NAV_LINKS, CONTACT_LINK, SITE_NAME, type PageKey } from '../data/site';
+
+interface Props {
+  current: PageKey;
+}
+const { current } = Astro.props;
+const allLinks = [...NAV_LINKS, CONTACT_LINK];
+---
+
+<header class="site-header">
+  <div class="site-header__bar">
+    <a href="/" class="brand" aria-label={`${SITE_NAME}, home`}>
+      <Logo />
+      <span class="brand__name">{SITE_NAME}</span>
+    </a>
+    <nav aria-label="Main" class="nav">
+      {
+        NAV_LINKS.map((link) => (
+          <a
+            class="nav__link nav__links"
+            href={link.href}
+            aria-current={current === link.key ? 'page' : undefined}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <div class="nav__actions">
+        <a
+          class="btn btn--sm nav__cta"
+          href={CONTACT_LINK.href}
+          aria-current={current === 'contact' ? 'page' : undefined}
+          data-nav-cta
+        >
+          Next Steps
+        </a>
+        <button
+          type="button"
+          class="menu-btn"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label="Open menu"
+          data-menu-toggle
+        >
+          <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true" data-icon="open">
+            <path d="M3 6h16M3 11h16M3 16h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+          <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true" data-icon="close" hidden>
+            <path d="M5 5l12 12M17 5L5 17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+  <nav id="mobile-menu" class="mobile-menu" aria-label="Main (mobile)" hidden>
+    <ul>
+      {
+        allLinks.map((link) => (
+          <li>
+            <a href={link.href} aria-current={current === link.key ? 'page' : undefined}>
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.getElementById('mobile-menu');
+  if (toggle && menu) {
+    const setOpen = (open: boolean) => {
+      menu.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      toggle.querySelector('[data-icon="open"]')?.toggleAttribute('hidden', open);
+      toggle.querySelector('[data-icon="close"]')?.toggleAttribute('hidden', !open);
+    };
+    toggle.addEventListener('click', () => setOpen(menu.hidden));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !menu.hidden) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    window.matchMedia('(min-width: 900px)').addEventListener('change', (e) => {
+      if (e.matches) setOpen(false);
+    });
+  }
+</script>

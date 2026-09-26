@@ -1,0 +1,42 @@
+---
+import Logo from './Logo.astro';
+import { NAV_LINKS, CONTACT_LINK, CONTACT_EMAIL, SITE_NAME, type PageKey } from '../data/site';
+
+interface Props {
+  current: PageKey;
+}
+const { current } = Astro.props;
+const links = [...NAV_LINKS, CONTACT_LINK];
+// On the Contact page the closing link points to the booking block, per the design.
+const closing =
+  current === 'contact'
+    ? { href: '#book', label: 'Book a call →' }
+    : { href: '/contact', label: 'What happens next →' };
+---
+
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-brand__row">
+        <Logo variant="dark" />
+        <span class="footer-brand__name">{SITE_NAME}</span>
+      </div>
+      <p>Technical product management for small behavioral and mental health practices.</p>
+    </div>
+    <nav aria-label="Footer" class="footer-nav">
+      <div class="footer-col footer-col--site">
+        <div class="footer-col__label">Site</div>
+        {links.map((l) => <a href={l.href}>{l.label}</a>)}
+      </div>
+      <div class="footer-col">
+        <div class="footer-col__label">Get in touch</div>
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+        <span class="footer-muted">carepracticestudio.com</span>
+      </div>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 {SITE_NAME}</span>
+    <a href={closing.href}>{closing.label}</a>
+  </div>
+</footer>

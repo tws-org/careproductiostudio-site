@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import Chips from '../components/Chips.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { STEPS } from '../data/site';
+---
+
+<Base
+  title="Home"
+  current="home"
+  description="Care Practice Studio plans and builds custom digital products for small behavioral and mental health practices."
+>
+  <section class="hero">
+    <div class="hero__copy">
+      <div class="eyebrow eyebrow--lg">Technical product management for behavioral health</div>
+      <h1 class="h1">Design a solution that connects your patients with your practice.</h1>
+      <p class="lede">
+        Care Practice Studio plans and builds custom digital products for small behavioral and mental health practices —
+        something that solves a real problem, and that you’ll actually use.
+      </p>
+      <div class="hero__actions">
+        <a class="btn" href="/contact">What happens next</a>
+        <a class="textlink" href="/execution">See how it works</a>
+      </div>
+    </div>
+    <svg class="hero__art hero__art--desktop" width="520" height="420" viewBox="0 0 520 420" aria-hidden="true">
+      <defs><clipPath id="lensA"><circle cx="190" cy="210" r="165"></circle></clipPath></defs>
+      <circle cx="330" cy="210" r="165" fill="#ECF8F3"></circle>
+      <circle cx="330" cy="210" r="165" fill="#10B981" clip-path="url(#lensA)"></circle>
+      <circle cx="190" cy="210" r="165" fill="none" stroke="#065F46" stroke-width="3"></circle>
+      <circle cx="330" cy="210" r="165" fill="none" stroke="#10B981" stroke-width="3"></circle>
+      <text x="112" y="215" text-anchor="middle" font-family="Lato, sans-serif" font-weight="700" font-size="17" fill="#065F46">Your patients</text>
+      <text x="410" y="215" text-anchor="middle" font-family="Lato, sans-serif" font-weight="700" font-size="17" fill="#065F46">Your practice</text>
+      <text x="260" y="206" text-anchor="middle" font-family="Lato, sans-serif" font-weight="900" font-size="15" fill="#04342A">Your</text>
+      <text x="260" y="226" text-anchor="middle" font-family="Lato, sans-serif" font-weight="900" font-size="15" fill="#04342A">product</text>
+    </svg>
+    <svg class="hero__art hero__art--mobile" width="350" height="200" viewBox="0 0 520 300" aria-hidden="true">
+      <defs><clipPath id="lensM"><circle cx="190" cy="150" r="130"></circle></clipPath></defs>
+      <circle cx="330" cy="150" r="130" fill="#ECF8F3"></circle>
+      <circle cx="330" cy="150" r="130" fill="#10B981" clip-path="url(#lensM)"></circle>
+      <circle cx="190" cy="150" r="130" fill="none" stroke="#065F46" stroke-width="4"></circle>
+      <circle cx="330" cy="150" r="130" fill="none" stroke="#10B981" stroke-width="4"></circle>
+      <text x="125" y="157" text-anchor="middle" font-family="Lato, sans-serif" font-weight="700" font-size="22" fill="#065F46">Patients</text>
+      <text x="395" y="157" text-anchor="middle" font-family="Lato, sans-serif" font-weight="700" font-size="22" fill="#065F46">Practice</text>
+    </svg>
+  </section>
+
+  <section class="section section--mint two-up" aria-label="Who I help and case study">
+    <article class="teaser teaser--light">
+      <div class="eyebrow">Who I help</div>
+      <h2 class="h2 h2--card">Made for small practices, not hospital systems</h2>
+      <p>You care for people in rooms that stay close. This work is built for that.</p>
+      <Chips />
+      <div class="grow"></div>
+      <a class="textlink" href="/help">Who I help →</a>
+    </article>
+    <article class="teaser teaser--dark">
+      <div class="eyebrow eyebrow--light">Case study · Jess Rebelo</div>
+      <h2 class="h2 h2--card">Real results, not just promises</h2>
+      <p>We don’t overpromise on compliance or security — only what we’ve actually delivered.</p>
+      <p>
+        Our first case study is with Jess Rebelo, a behavioral health provider who needed a tool to streamline her workflow.
+        Together, we built something that actually works — and now she’s using it every day.
+      </p>
+      <div class="grow"></div>
+      <a class="textlink textlink--light" href="/help#case-studies">Read the case study →</a>
+    </article>
+  </section>
+
+  <section class="section section--roomy stack how" aria-labelledby="how-title">
+    <div class="section-head">
+      <div class="stack" style="gap: 16px">
+        <div class="eyebrow">What I do</div>
+        <h2 id="how-title" class="h2 h2--lg">How it works</h2>
+      </div>
+      <a class="textlink how__head-link" href="/execution">The full process →</a>
+    </div>
+    <ol class="steps-4">
+      {
+        STEPS.map((step, i) => (
+          <li>
+            <span class="num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{step.title}</h3>
+            <p>{step.short}</p>
+          </li>
+        ))
+      }
+    </ol>
+    <a class="textlink how__foot-link" href="/execution">The full process →</a>
+  </section>
+
+  <CtaBand title="Let’s get started">
+    You don’t need to wait for a perfect solution. You need someone who gets your world — and who can help you build something
+    that fits.
+  </CtaBand>
+</Base>

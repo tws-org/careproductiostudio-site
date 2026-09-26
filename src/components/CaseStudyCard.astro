@@ -1,0 +1,54 @@
+---
+import type { CaseStudy } from '../data/caseStudies';
+
+interface Props {
+  study: CaseStudy;
+}
+const { study } = Astro.props;
+---
+
+<article class="cs-card" aria-labelledby={`cs-${study.id}`}>
+  <div class="cs-card__body">
+    <div class="cs-card__meta">
+      <span class="cs-card__tag">{study.tag}</span>
+      <span>{study.org}</span>
+    </div>
+    <h3 id={`cs-${study.id}`}>{study.name}</h3>
+    <p class="body-lg">{study.summary}</p>
+    {
+      (study.before || study.after) && (
+        <dl>
+          {study.before && (
+            <div>
+              <dt>Before</dt>
+              <dd>{study.before}</dd>
+            </div>
+          )}
+          {study.after && (
+            <div>
+              <dt>After</dt>
+              <dd>{study.after}</dd>
+            </div>
+          )}
+        </dl>
+      )
+    }
+    {
+      study.quote && (
+        <blockquote>
+          {study.quote.text}
+          <footer>{study.quote.attribution}</footer>
+        </blockquote>
+      )
+    }
+  </div>
+  {
+    study.image ? (
+      <div class="cs-card__media cs-card__media--image">
+        <img src={study.image.src} alt={study.image.alt} loading="lazy" />
+      </div>
+    ) : (
+      <div class="cs-card__media">[PROJECT SCREENSHOT]</div>
+    )
+  }
+</article>

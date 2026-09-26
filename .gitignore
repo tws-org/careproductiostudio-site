@@ -1,1 +1,8 @@
 care-practice-studio-site/*
+node_modules/
+dist/
+.astro/
+.wrangler/
+.env
+.DS_Store
+.shots/

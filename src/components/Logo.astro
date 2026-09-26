@@ -1,0 +1,12 @@
+---
+interface Props {
+  variant?: 'light' | 'dark';
+}
+const { variant = 'light' } = Astro.props;
+const left = variant === 'dark' ? '#A7F3D0' : '#065F46';
+---
+
+<svg width="38" height="24" viewBox="0 0 38 24" aria-hidden="true">
+  <circle cx="12" cy="12" r="10" fill="none" stroke={left} stroke-width="2.5"></circle>
+  <circle cx="26" cy="12" r="10" fill="none" stroke="#10B981" stroke-width="2.5"></circle>
+</svg>

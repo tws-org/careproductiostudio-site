@@ -1,0 +1,129 @@
+---
+import Base from '../layouts/Base.astro';
+import Chips from '../components/Chips.astro';
+import CtaBand from '../components/CtaBand.astro';
+import CaseStudies from '../components/CaseStudies.astro';
+
+const faqs = [
+  {
+    q: 'A practice can feel too small for a product studio.',
+    a: 'Small is exactly who this work is for. Solo practitioners, wellness practices, small nonprofits, and community clinics in behavioral and mental health are the heart of the studio — and a wonderful place to begin.',
+  },
+  {
+    q: 'Is Care Practice Studio a web agency?',
+    a: 'No — and that distinction is a strength. Care Practice Studio is technical product management. Peter plans and builds custom digital products with care, rather than running a generic web shop.',
+  },
+  {
+    q: 'Does the studio serve hospital systems?',
+    a: 'No. Large hospital-affiliated systems sit outside this focus, so care and attention stay with smaller, mission-driven teams.',
+  },
+  {
+    q: 'Does the work place a practice on a directory?',
+    a: 'No. Directory and lead-gen sites are a different business. The aim is a product made for one team, not a public listing.',
+  },
+  {
+    q: 'Does the studio already hold deep compliance credentials?',
+    a: 'No. That experience is not claimed here. When a product needs a compliance review, the right reviewer belongs alongside the build — Peter will gladly work with that reviewer and will not pretend to fill that role.',
+  },
+];
+---
+
+<Base
+  title="Who I help"
+  current="help"
+  description="Care Practice Studio works one-on-one with solo practitioners, small nonprofits, and community clinics in behavioral and mental health."
+>
+  <section class="page-intro">
+    <div class="eyebrow eyebrow--lg">Who I help</div>
+    <h1 class="h1">Made for small practices, not hospital systems</h1>
+    <p class="lede lede--italic">You care for people in rooms that stay close. This work is built for that.</p>
+    <Chips />
+  </section>
+
+  <section class="section section--mint split">
+    <h2 class="h2">The tools close at hand were not shaped for small practices</h2>
+    <div class="prose">
+      <p>
+        Care Practice Studio works alongside solo practitioners, small nonprofits, and community clinics. Days in this work are
+        already full. A modest, real-world budget can still support a clear mission.
+      </p>
+      <p>
+        Big hospital systems already have vendors built for them. Directory sites mostly want another name on a list. Generic web
+        shops tend to hand everyone the same site.
+      </p>
+      <p>That still leaves room for behavioral health, mental health, and a wellness practice that stays small on purpose.</p>
+      <p class="emph">Those providers do not need a lead list. What fits is a product shaped around how people are actually helped.</p>
+    </div>
+  </section>
+
+  <section class="section section--roomy split">
+    <div class="stack" style="gap: 20px">
+      <h2 class="h2">One client. One custom product.</h2>
+      <p class="body-lg">
+        Care Practice Studio is a solo consultancy, and that focus is a gift. Peter plans and builds custom digital products with
+        real care for behavioral and mental health providers, wellness practices, solo practitioners, small nonprofits, and
+        community clinics.
+      </p>
+      <p class="body-lg">
+        Each job is one-on-one. One client at a time, so the work gets his full attention — closer and more personal than a large
+        hospital-affiliated system, and nothing like a directory or lead-gen site.
+      </p>
+    </div>
+    <div class="stack" style="gap: 16px">
+      <ol class="numbered-cards">
+        <li><span class="num">1</span><span class="txt">A practice brings the work of daily care.</span></li>
+        <li><span class="num">2</span><span class="txt">Peter plans a product made only for that client.</span></li>
+        <li><span class="num">3</span><span class="txt">He builds that product alongside the client, start to finish.</span></li>
+      </ol>
+      <p class="kicker">No shared queue. No template pulled from a catalog.</p>
+    </div>
+  </section>
+
+  <section class="section section--roomy stack" style="padding-top: 0; gap: 40px">
+    <h2 class="h2">What that means for this kind of work</h2>
+    <div class="two-up">
+      <article class="mint-card">
+        <h3 class="h3">Clients remain the focus, not a segment</h3>
+        <ul>
+          <li>
+            The niche is named on purpose, and it is a hopeful one: behavioral and mental health, wellness practices, solo
+            practitioners, small nonprofits, and community clinics.
+          </li>
+          <li>Community outpatient clinics are warmly welcome. Large hospital-affiliated systems sit outside that circle.</li>
+          <li>The working relationship is with Peter, a steady partner, rather than a rotating team.</li>
+        </ul>
+      </article>
+      <article class="mint-card">
+        <h3 class="h3">The offering is a product, not a listing</h3>
+        <ul>
+          <li>Care Practice Studio is neither a directory nor a lead-gen site.</li>
+          <li>Each build is bespoke: planned with care for one mission-driven provider.</li>
+          <li>A logo on a generic healthcare package would miss the point.</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <CaseStudies />
+
+  <section class="section section--roomy split" aria-labelledby="faq-title">
+    <h2 id="faq-title" class="h2">Straight answers before the work begins</h2>
+    <div class="stack">
+      {
+        faqs.map((f) => (
+          <div class="faq__item">
+            <h3>{f.q}</h3>
+            <p>{f.a}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <CtaBand title="When a practice fits this page" wide>
+    Care Practice Studio works with one client at a time, so a small practice receives real attention. The studio is glad to support
+    mission-driven behavioral and mental health providers — wellness practices, solo practitioners, small nonprofits, and community
+    clinics — whose care is rooted in the community rather than in large hospital-affiliated systems or in directory and lead-gen
+    sites.
+  </CtaBand>
+</Base>

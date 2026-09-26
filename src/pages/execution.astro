@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { STEPS } from '../data/site';
+---
+
+<Base
+  title="What I do"
+  current="execution"
+  description="How Care Practice Studio works: we listen, we plan, we build, and we check in after launch."
+>
+  <section class="page-intro page-intro--tight">
+    <div class="eyebrow eyebrow--lg">What I do</div>
+    <h1 class="h1">Planning first, then an AI-assisted build.</h1>
+    <p class="lede">
+      Care leads, and the tool follows — not the other way. The hope is for one person who will learn the problem, plan it, then
+      build it, and a clear look at how the work actually goes matters before anyone says yes.
+    </p>
+  </section>
+
+  <section class="process" aria-label="The four-step process">
+    <ol>
+      {
+        STEPS.map((step, i) => (
+          <li>
+            <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <div class="process__head">
+              <div class="process__label">{step.label}</div>
+              <h2>{step.title}</h2>
+            </div>
+            <div class="process__body">
+              <p>{step.long}</p>
+              {i === STEPS.length - 1 && (
+                <div class="callout">
+                  <div class="callout__title">Included: a 3-hour post-launch check-in</div>
+                  <p>
+                    We look at how you’re actually using the product, confirm you’re happy with it, and review real usage data
+                    together. Then we decide next steps together — a fix, a new feature, or a separate project.
+                  </p>
+                </div>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <CtaBand title="Let’s get started">
+    You don’t need to wait for a perfect solution. You need someone who gets your world — and who can help you build something
+    that fits.
+  </CtaBand>
+</Base>

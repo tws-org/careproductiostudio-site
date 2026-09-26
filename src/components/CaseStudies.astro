@@ -1,0 +1,91 @@
+---
+import CaseStudyCard from './CaseStudyCard.astro';
+import { caseStudies, showUpcomingSlide } from '../data/caseStudies';
+
+const total = caseStudies.length + (showUpcomingSlide ? 1 : 0);
+const hasCarousel = total > 1;
+---
+
+<section id="case-studies" aria-labelledby="case-studies-title" class="section section--roomy section--emerald case-studies" data-carousel>
+  <div class="section-head">
+    <div class="case-studies__intro">
+      <div class="eyebrow eyebrow--light">Case studies</div>
+      <h2 id="case-studies-title" class="h2 h2--lg">Real results, not just promises</h2>
+      <p>We don’t overpromise on compliance or security — only what we’ve actually delivered.</p>
+    </div>
+    {
+      hasCarousel && (
+        <div class="cs-arrows" data-carousel-controls hidden>
+          <button class="arrow" type="button" aria-label="Previous case study" data-prev>
+            <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M12.5 4L6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+          <button class="arrow" type="button" aria-label="Next case study" data-next>
+            <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M7.5 4l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+      )
+    }
+  </div>
+
+  <div class="cs-slides">
+    {
+      caseStudies.map((study, i) => (
+        <div class="slide" data-slide={i + 1} role="group" aria-roledescription="slide" aria-label={`${i + 1} of ${total}`}>
+          <CaseStudyCard study={study} />
+        </div>
+      ))
+    }
+    {
+      showUpcomingSlide && (
+        <div class="slide" data-slide={total} role="group" aria-roledescription="slide" aria-label={`${total} of ${total}`}>
+          <article class="cs-upcoming">
+            <div class="eyebrow eyebrow--light">Case study {total}</div>
+            <h3>In progress</h3>
+            <p>New stories will appear here as work launches.</p>
+          </article>
+        </div>
+      )
+    }
+  </div>
+
+  {
+    hasCarousel && (
+      <div class="cs-controls" data-carousel-controls hidden>
+        <div class="cs-dots">
+          {Array.from({ length: total }, (_, i) => (
+            <button type="button" class="cs-dot" aria-label={`Show case study ${i + 1}`} aria-current={i === 0 ? 'true' : undefined} data-dot />
+          ))}
+        </div>
+        <span aria-live="polite" data-counter>1 of {total}</span>
+      </div>
+    )
+  }
+</section>
+
+<script>
+  // Progressive enhancement: without JS every slide is shown stacked and the controls stay hidden.
+  const root = document.querySelector<HTMLElement>('[data-carousel]');
+  if (root) {
+    const slides = Array.from(root.querySelectorAll<HTMLElement>('.slide'));
+    const dots = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-dot]'));
+    const counter = root.querySelector('[data-counter]');
+    if (slides.length > 1) {
+      let idx = 0;
+      const show = (i: number) => {
+        idx = (i + slides.length) % slides.length;
+        slides.forEach((s, n) => (s.hidden = n !== idx));
+        dots.forEach((d, n) => (n === idx ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current')));
+        if (counter) counter.textContent = `${idx + 1} of ${slides.length}`;
+      };
+      root.querySelectorAll<HTMLElement>('[data-carousel-controls]').forEach((el) => (el.hidden = false));
+      root.querySelector('[data-prev]')?.addEventListener('click', () => show(idx - 1));
+      root.querySelector('[data-next]')?.addEventListener('click', () => show(idx + 1));
+      dots.forEach((d, n) => d.addEventListener('click', () => show(n)));
+      show(0);
+    }
+  }
+</script>

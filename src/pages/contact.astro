@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import { bookingHref } from '../data/site';
+
+const questions = [
+  'Is keeping the business going overwhelming, with less focus left for patients?',
+  'Or, is the practice steady and ready to grow once one known problem is worked through?',
+  'Or, is your business in a position to experiment and try new things and level up using new AI technologies?',
+];
+const answers = [
+  { value: '0', label: 'Not at all' },
+  { value: '5', label: 'Somewhat' },
+  { value: '10', label: 'Yes, help please!' },
+];
+const href = bookingHref();
+---
+
+<Base
+  title="Contact"
+  current="contact"
+  description="Answer three optional questions, or skip straight to booking a call with Care Practice Studio."
+>
+  <section class="contact-intro">
+    <div class="stack" style="gap: 20px">
+      <div class="eyebrow eyebrow--lg">Contact</div>
+      <h1 class="h1">The big step</h1>
+      <p class="lede">To begin, fill out this short form and set a time to speak.</p>
+    </div>
+    <a class="btn" href="#book">Skip the questions — book now</a>
+  </section>
+
+  <section class="questions-wrap">
+    <!-- Optional: never blocks booking. Answers are appended to the booking link as Calendly prefills (a1–a3). -->
+    <form class="questions" aria-labelledby="questions-title" data-questions>
+      <div class="questions__head">
+        <h2 id="questions-title">Three quick questions</h2>
+        <span class="questions__note">Optional — answer any, or none</span>
+      </div>
+      {
+        questions.map((q, i) => (
+          <fieldset class="question">
+            <legend class="sr">{q}</legend>
+            <p class="question__text" aria-hidden="true">{q}</p>
+            <div class="pills">
+              {answers.map((a) => (
+                <label class="pill">
+                  <input class="sr" type="radio" name={`q${i + 1}`} value={a.value} data-label={a.label} />
+                  <span class="pill-value">{a.value}</span>
+                  <span class="pill-label">{a.label}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        ))
+      }
+    </form>
+  </section>
+
+  <section id="book" class="book-wrap grow" aria-labelledby="book-title">
+    <div class="book">
+      <div class="book__copy">
+        <div class="eyebrow eyebrow--light">Set a time to speak</div>
+        <h2 id="book-title" class="h2 h2--lg">Pick a time that works for you</h2>
+      </div>
+      <div class="book__action">
+        <a class="btn-inv" href={href} target="_blank" rel="noopener" data-book-link data-base-href={href}>
+          <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+            <rect x="3" y="4.5" width="16" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"></rect>
+            <path d="M3 9h16M7.5 2.5v4M14.5 2.5v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+          </svg>
+          Book a call
+        </a>
+        <span class="book__hint">Calendly · opens in a new tab</span>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Carry any answers into the booking link. The link is always usable, answered or not.
+  const form = document.querySelector<HTMLFormElement>('[data-questions]');
+  const link = document.querySelector<HTMLAnchorElement>('[data-book-link]');
+  if (form && link) {
+    const base = link.dataset.baseHref || link.href;
+    const update = () => {
+      const url = new URL(base);
+      ['q1', 'q2', 'q3'].forEach((name, i) => {
+        const checked = form.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`);
+        if (checked) url.searchParams.set(`a${i + 1}`, `${checked.value} (${checked.dataset.label})`);
+      });
+      link.href = url.toString();
+    };
+    form.addEventListener('change', update);
+    form.addEventListener('submit', (e) => e.preventDefault());
+  }
+</script>

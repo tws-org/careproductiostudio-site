@@ -1,0 +1,13 @@
+---
+interface Props {
+  title: string;
+  wide?: boolean;
+}
+const { title, wide = false } = Astro.props;
+---
+
+<section class:list={['cta-band', 'grow', { 'cta-band--wide': wide }]}>
+  <h2 class="h2 h2--xl">{title}</h2>
+  <p><slot /></p>
+  <a class="btn" href="/contact">What happens next</a>
+</section>
