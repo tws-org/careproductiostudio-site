@@ -92,10 +92,10 @@ for (const vp of VIEWPORTS) {
       const book = page.locator('a[data-book-link]');
       const href = await book.getAttribute('href');
       ok(/^https:\/\/(calendly\.com|cal\.com)\//.test(href || ''), `booking link is a scheduling URL (${href})`);
-      await page.locator('a[href="#book"]').first().click();
-      await page.waitForTimeout(800);
+      // No skip button anymore: the booking link must be reachable directly, without answering anything.
+      await book.scrollIntoViewIfNeeded();
       const bb = await book.boundingBox();
-      ok(bb && bb.y >= 0 && bb.y + bb.height <= vp.height, 'skip link brings "Book a call" into view without answering anything');
+      ok(bb && bb.y >= 0 && bb.y + bb.height <= vp.height, 'booking link reachable without answering anything');
       const [popup] = await Promise.all([page.waitForEvent('popup', { timeout: 10000 }).catch(() => null), book.click()]);
       ok(!!popup, 'clicking "Book a call" with no answers opens the scheduler');
       if (popup) await popup.close();
